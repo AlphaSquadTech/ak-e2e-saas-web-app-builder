@@ -132,6 +132,28 @@ python3 ${SKILL_ABS}/scripts/scan_project.py --project-dir .
 7. Record verification result in state manager
 8. Move to next page
 
+## ⚠️ AUTONOMOUS EXECUTION — DO NOT STOP BETWEEN PHASES
+
+**You are running an autonomous pipeline. Complete ALL phases without stopping to ask
+the user for permission between phases.**
+
+- Phase 0 (Parse & Plan) → proceed immediately to Phase 1
+- Phase 1 (Scaffold) → proceed immediately to Phase 2
+- Phase 2 (Build all pages) → proceed immediately to Phase 2.5
+- Phase 2.5 (Images) → proceed immediately to Phase 3
+- Phase 3 (Audit) → fix all issues found → deliver to user
+
+**DO NOT** say "shall I continue?", "would you like me to proceed?", "ready for the
+next phase?", or any variation. The user expects the entire app to be built, verified,
+and delivered in one continuous run.
+
+The ONLY acceptable reasons to pause:
+1. OpenAPI spec is too ambiguous (Phase 0)
+2. Design inputs not provided (Phase 1, first time only)
+3. Gemini API key missing and user hasn't provided one (Phase 2.5)
+
+Everything else: **keep going.**
+
 ## Key Files
 
 - \`.nextjs-builder-state.json\` — Build progress (source of truth)

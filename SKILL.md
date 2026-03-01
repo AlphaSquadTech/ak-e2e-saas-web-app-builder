@@ -147,39 +147,49 @@ To use this skill on an existing NextJS project:
 | 2.5 | **Images** | Generate real images via Gemini API for empty states, illustrations, avatars |
 | 3 | **Audit** | Full-app visual pass, accessibility check, interaction audit, responsive verification |
 
+**⚠️ All phases run autonomously in sequence.** Do NOT pause between phases to ask the
+user for permission. Complete the full pipeline (0 → 1 → 2 → 2.5 → 3 → Deliver) in one go.
+
 For detailed instructions: [references/workflow-phases.md](references/workflow-phases.md)
 
 ## Core Principles
 
-1. **Spec-first.** The OpenAPI spec is the source of truth. Every endpoint becomes a page
+1. **Autonomous end-to-end execution.** Once the user provides inputs and says "go",
+   run the ENTIRE pipeline (Phase 0 → 1 → 2 → 2.5 → 3 → Deliver) without stopping
+   to ask permission between phases. Do NOT ask "shall I continue?", "would you like
+   me to proceed?", or check in after each phase. The only acceptable pauses are:
+   ambiguous spec (Phase 0), missing design inputs (Phase 1 first time), or missing
+   Gemini API key (Phase 2.5). Everything else runs autonomously until delivery.
+
+2. **Spec-first.** The OpenAPI spec is the source of truth. Every endpoint becomes a page
    or component. Schemas drive form fields, table columns, and mock data shapes. Don't
    invent API structures.
 
-2. **Interactive by default.** Every component gets micro-interactions: buttons have
+3. **Interactive by default.** Every component gets micro-interactions: buttons have
    hover/tap feedback, cards lift on hover, loading states use skeletons, forms validate
    in real-time, toasts confirm actions. Use Framer Motion + shadcn/ui patterns.
    See [references/interaction-patterns.md](references/interaction-patterns.md).
 
-3. **Real API when available, mock data as fallback.** If the user provides a backend
+4. **Real API when available, mock data as fallback.** If the user provides a backend
    API URL, generate API client functions that call the real endpoints. Use the OpenAPI
    spec to type the responses. If no backend URL is given (or the API is unreachable),
    fall back to realistic mock data generated from schemas. The frontend should feel
    like a working app either way — but real data is always preferred.
 
-4. **Verify visually, autonomously.** After implementing each page, take a screenshot and
+5. **Verify visually, autonomously.** After implementing each page, take a screenshot and
    analyze it. Fix issues without asking the user. Only escalate if stuck after 3 attempts.
    See [references/visual-verification.md](references/visual-verification.md).
 
-5. **Track everything.** Update `.nextjs-builder-state.json` after every meaningful action.
+6. **Track everything.** Update `.nextjs-builder-state.json` after every meaningful action.
    This is the source of truth. Use:
    ```bash
    python <skill-path>/scripts/state_manager.py --action update-page --page-id dashboard --status verified
    ```
 
-6. **Ship quality.** shadcn/ui components, Radix UI accessibility, proper TypeScript,
+7. **Ship quality.** shadcn/ui components, Radix UI accessibility, proper TypeScript,
    Zod validation on all forms. The output should be production-ready.
 
-7. **Verify or it didn't happen.** The state manager enforces that pages cannot be
+8. **Verify or it didn't happen.** The state manager enforces that pages cannot be
    marked `verified` without a passing verification entry that includes a screenshot.
    Use `verify_page.sh` to run the full verification pipeline in one command. The
    generated `CLAUDE.md`/`GEMINI.md` file repeats this rule on every turn.

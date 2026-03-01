@@ -4,6 +4,18 @@
 The SKILL.md instructs Claude to run `bash <skill-path>/scripts/preflight.sh` before
 doing any work. If preflight hasn't run yet in this session, run it now.
 
+### ⚠️ AUTONOMOUS EXECUTION MANDATE
+
+**This skill runs end-to-end without stopping for user input between phases.**
+The ONLY acceptable reasons to pause and ask the user are:
+1. The OpenAPI spec is too ambiguous to generate a reasonable plan (Phase 0)
+2. Design inputs haven't been provided yet (Phase 1 — first time only)
+3. The Gemini API key is missing and needed for image generation (Phase 2.5)
+
+For ALL other transitions — Phase 0→1, 1→2, 2→2.5, 2.5→3 — proceed immediately.
+Do NOT ask "shall I continue?", "would you like me to proceed?", or any variation.
+Complete the entire pipeline in one go. The user expects autonomous execution.
+
 ## Phase 0: OpenAPI Parsing & Plan Generation
 
 ### Parse the OpenAPI Spec
@@ -429,6 +441,21 @@ After each page, spot-check one previously verified page to catch regressions
 
 Move to the next page in the build order. Repeat until all pages are done.
 
+### ⚠️ AUTONOMOUS CONTINUATION — DO NOT STOP HERE
+
+**When all pages in the build order are complete, DO NOT stop. DO NOT ask the user
+"Would you like me to continue?" or "Shall I proceed to Phase 2.5?" or any variation.**
+
+You MUST proceed immediately to Phase 2.5 (Image Generation). The skill is designed
+to run end-to-end without human intervention. The only acceptable reason to pause is
+if the Gemini API key is missing AND the user hasn't provided one — in that case,
+ask for the key, then continue.
+
+Set the phase and move on:
+```bash
+python <skill-path>/scripts/state_manager.py --action set-phase --phase images
+```
+
 ---
 
 ## Phase 2.5: Image Generation
@@ -461,6 +488,16 @@ python <skill-path>/scripts/generate_images.py
 ```
 
 After swapping placeholders for real images, take new screenshots and verify.
+
+### ⚠️ AUTONOMOUS CONTINUATION — DO NOT STOP HERE
+
+**When image generation is complete (or skipped), DO NOT stop. DO NOT ask the user
+"Would you like me to run the audit?" or "Shall I proceed?" or any variation.**
+
+You MUST proceed immediately to Phase 3 (Final Audit). Set the phase and continue:
+```bash
+python <skill-path>/scripts/state_manager.py --action set-phase --phase audit
+```
 
 ---
 
@@ -506,6 +543,13 @@ npm run build
 - Bundle size reasonable
 - Images optimized
 
+### ⚠️ DO NOT STOP UNTIL AUDIT IS COMPLETE
+
+**Do NOT stop in the middle of the audit.** Complete ALL checklists above, fix any
+issues found, re-verify fixed pages, and only THEN proceed to delivery. If you find
+issues during the audit, fix them immediately — do not report them and wait for
+user instructions.
+
 ### Deliver
 
 Update state to complete:
@@ -516,8 +560,11 @@ python <skill-path>/scripts/state_manager.py --action set-phase --phase complete
 Present the user with:
 - Summary of all pages built (routes, titles, key functionality)
 - Screenshot gallery
-- Any unresolved issues
+- Any unresolved issues that could not be auto-fixed (with explanations)
 - Run instructions: `npm run dev`
+
+**This is the FIRST time you should stop and hand control back to the user.**
+The entire pipeline (Phase 0 → 1 → 2 → 2.5 → 3 → Deliver) runs autonomously.
 
 ---
 
