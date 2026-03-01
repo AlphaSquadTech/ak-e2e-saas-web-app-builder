@@ -62,25 +62,30 @@ Do not skip this step. Do not pick defaults silently. Always ask, even if the us
 initial prompt doesn't mention design. If they say "pick for me" or don't care, THEN
 you may choose defaults based on the API's subject matter.
 
-Ask for exactly these five inputs (nothing more — everything else is derived automatically):
+Ask for exactly these six inputs (nothing more — everything else is derived automatically):
 
 1. **OpenAPI Spec** — Path to a local file OR a GitHub raw URL to an OpenAPI 3.x spec
    (YAML or JSON). The skill will fetch from URLs automatically.
 
-2. **App layout preference** — Ask: "What layout style do you want?"
+2. **Backend API URL** (optional) — The base URL of a running backend API (e.g.,
+   `https://api.example.com/v1`). If provided, the app will make real API calls
+   instead of using mock data. If not provided or the API is not running,
+   the app falls back to mock data generated from the spec schemas.
+
+3. **App layout preference** — Ask: "What layout style do you want?"
    - `sidebar` → Collapsible sidebar nav + top bar + main content (default for most SaaS)
    - `topnav` → Horizontal nav bar + main content area
    - `minimal` → No persistent nav, tab-based navigation within pages
    - Or describe a custom layout
 
-3. **Accent color** — A single brand/accent color (hex code, color name, or "pick for me").
+4. **Accent color** — A single brand/accent color (hex code, color name, or "pick for me").
    This drives the entire palette: primary buttons, links, highlights. The rest of the
    color system is generated automatically to complement this choice.
 
-4. **Font preference** — One of: "modern" (Inter/DM Sans), "elegant" (Playfair Display + Inter),
+5. **Font preference** — One of: "modern" (Inter/DM Sans), "elegant" (Playfair Display + Inter),
    "bold" (Plus Jakarta Sans), "minimal" (Geist), or a specific Google Font name.
 
-5. **Gemini API key** — Required for AI image generation (empty states, onboarding
+6. **Gemini API key** — Required for AI image generation (empty states, onboarding
    illustrations, avatars). Ask the user for their `GEMINI_API_KEY` (or `GOOGLE_API_KEY`).
    If they don't have one, point them to https://aistudio.google.com/apikey.
    If they want to skip, the app will use branded SVG placeholders and still look good.
@@ -155,9 +160,11 @@ For detailed instructions: [references/workflow-phases.md](references/workflow-p
    in real-time, toasts confirm actions. Use Framer Motion + shadcn/ui patterns.
    See [references/interaction-patterns.md](references/interaction-patterns.md).
 
-3. **Mock data, real UX.** Generate realistic mock data from OpenAPI schemas (using
-   faker-like patterns or hardcoded realistic data). The frontend should feel like a
-   working app even without a backend.
+3. **Real API when available, mock data as fallback.** If the user provides a backend
+   API URL, generate API client functions that call the real endpoints. Use the OpenAPI
+   spec to type the responses. If no backend URL is given (or the API is unreachable),
+   fall back to realistic mock data generated from schemas. The frontend should feel
+   like a working app either way — but real data is always preferred.
 
 4. **Verify visually, autonomously.** After implementing each page, take a screenshot and
    analyze it. Fix issues without asking the user. Only escalate if stuck after 3 attempts.

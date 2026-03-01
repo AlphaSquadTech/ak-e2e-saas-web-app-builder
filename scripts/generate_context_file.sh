@@ -110,6 +110,17 @@ python3 ${SKILL_ABS}/scripts/generate_images.py
 python3 ${SKILL_ABS}/scripts/scan_project.py --project-dir .
 \`\`\`
 
+## ⛔ SPACING AND ALIGNMENT RULES (Non-Negotiable)
+
+- Every card MUST have \`p-6\` minimum internal padding
+- Every table cell MUST have \`px-4 py-3\` minimum padding
+- Every nav bar MUST use \`items-center\` — all items vertically centered
+- Every page content area MUST have \`px-6 py-6\` minimum padding
+- Every list item MUST have \`px-4 py-3\` minimum padding
+- Badge text MUST NOT touch badge borders — use \`px-2.5 py-0.5\` minimum
+- If a backend API URL was provided, use REAL API calls, not mock data
+- When verifying: the DEFAULT is FAIL. Only PASS if spacing/alignment is perfect.
+
 ## Build Cycle (for every page)
 
 1. Implement the page code with shadcn/ui components

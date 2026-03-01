@@ -27,6 +27,45 @@ Content importance should be immediately clear through:
 - **Position**: Most important data at top-left
 - **Whitespace**: Important elements get more surrounding space
 
+## Mandatory Spacing Minimums
+
+These are non-negotiable minimums. Violating any of these is a verification failure.
+
+### Container Padding
+- **Page content area**: `px-6 py-6` minimum (24px on all sides)
+- **Cards**: `p-6` minimum (24px internal padding)
+- **Table cells**: `px-4 py-3` minimum (16px horizontal, 12px vertical)
+- **Nav bar**: `px-4 py-3` minimum (16px horizontal, 12px vertical)
+- **Sidebar nav items**: `px-3 py-2` minimum with `gap-1` between items
+- **List items**: `px-4 py-3` minimum
+- **Badges/tags**: `px-2.5 py-0.5` minimum (never let text touch the badge border)
+- **Buttons**: `px-4 py-2` minimum for default, `px-6 py-3` for primary CTAs
+- **Form inputs**: `px-3 py-2` minimum internal padding
+- **Dialog/Sheet content**: `p-6` minimum
+
+### Gaps Between Elements
+- **Between cards in a grid**: `gap-4` minimum (16px), prefer `gap-6` (24px)
+- **Between form fields**: `space-y-4` minimum (16px)
+- **Between sections on a page**: `space-y-6` minimum (24px), prefer `space-y-8`
+- **Between table rows**: built into cell padding, no extra needed
+- **Between nav items in sidebar**: `gap-1` minimum (4px)
+- **Between icon and text**: `gap-2` minimum (8px)
+- **Between avatar and name**: `gap-3` minimum (12px)
+
+### Alignment Rules
+- **Nav bar items**: All items must be vertically centered using `items-center` on the flex container. Test: draw an imaginary horizontal line through the middle — every item's center should touch it.
+- **Table columns**: Header text alignment must match data text alignment (left-aligned headers = left-aligned data)
+- **Form labels**: Choose one alignment (top-aligned or left-aligned) and apply consistently across ALL forms
+- **Sidebar icons**: All icons must be the same size and vertically aligned with their labels
+- **Status badges in tables**: Vertically centered within their row
+
+### Common Anti-Patterns to Avoid
+- **Cramped nav bars**: Logo, center items, and right items must be in a proper flex layout with `justify-between` and `items-center`. Never use absolute positioning for nav items.
+- **Tables without cell padding**: Always use shadcn Table with proper `TableCell` components. Never use raw `<td>` without padding classes.
+- **Cards touching their container**: Cards must have margin/gap from their parent container, not sit flush against edges.
+- **Messages/list items without left padding**: Every list item needs at least `pl-4` from its container edge.
+- **Notification badges floating away**: Use `relative` on the parent icon and `absolute -top-1 -right-1` on the badge — never loose positioning.
+
 ## Typography
 
 ### Font Selection

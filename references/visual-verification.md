@@ -127,44 +127,73 @@ For each chunk, evaluate against these criteria:
 - Any missing sections that should be here?
 - Text readable (not too small, not clipped, not overflowing)?
 
-### Per-Section Checks for SaaS Pages
+### Per-Section Checks (SaaS-Specific)
 
-**Sidebar chunk**:
-- Navigation items present and readable?
-- Active state visually distinct (background or border)?
-- Collapse/expand button visible?
-- Icons paired with labels?
+**CRITICAL: Do not rubber-stamp screenshots.** Look at each chunk as if you are a QA
+engineer being paid to find defects. Common issues the AI tends to miss:
 
-**Data table chunk**:
-- Table headers properly aligned?
-- Column headers bold and distinct from data?
-- Data rows populated with content?
-- Zebra striping (alternating row colors) present?
-- Pagination or load more control visible?
+- **Padding/spacing too tight**: Every container, card, panel, and section needs visible
+  breathing room. If text touches or nearly touches a border/edge, it's a failure.
+- **Alignment drift**: Elements in a row (nav items, buttons, avatars) must share the
+  same vertical center. If one item is even slightly off, it's a failure.
+- **Inconsistent gaps**: If three cards have different spacing between them, it's a failure.
 
-**Form chunk**:
-- All form fields present?
-- Labels aligned and associated with inputs?
-- Placeholder text visible but not confusing?
-- Validation messages clear and positioned correctly?
-- Submit button prominent and accessible?
+For each chunk type, check EVERY item in the list. Do not skip any:
 
-**Dashboard chunk**:
-- Stat cards rendered with icon, label, and value?
-- Cards aligned in grid layout?
-- Gap spacing consistent between cards?
-- No horizontal scrolling?
-- Charts/visualizations visible and not distorted?
+- **Top bar / Navigation chunk**:
+  - [ ] Logo and nav items vertically centered (use the midline — are they on the same horizontal axis?)
+  - [ ] Right-side items (avatar, notifications, search) vertically centered with each other
+  - [ ] Minimum 12px padding on all sides of the nav bar
+  - [ ] Notification badge positioned correctly (top-right of bell icon, not floating away)
+  - [ ] Active nav item has visible indicator (underline, background, or color change)
+  - [ ] No items touching or overlapping the edges of the nav container
+  - [ ] On mobile: hamburger menu icon visible, properly sized tap target (min 44px)
 
-**Recent activity / list chunk**:
-- Items rendered and populated with data?
-- Timestamps or metadata visible?
-- Empty state shown appropriately (if no data)?
+- **Sidebar chunk**:
+  - [ ] Navigation items have consistent vertical spacing (not bunched or uneven)
+  - [ ] Active state clearly visible (background highlight, accent border, or bold text)
+  - [ ] Collapse/expand button present and properly positioned
+  - [ ] Icons aligned vertically with each other
+  - [ ] Minimum 12px padding from sidebar edges to content
+  - [ ] Sidebar width consistent (not partially collapsed or overflowing)
 
-**Empty state chunk**:
-- Illustration or icon visible?
-- Message text clear and helpful?
-- CTA button prominent and labeled?
+- **Data table chunk**:
+  - [ ] Column headers aligned with their data cells
+  - [ ] Minimum 12px cell padding (text should NOT touch cell borders)
+  - [ ] Row height comfortable — at least 48px for rows with actions
+  - [ ] Action buttons/dropdowns fully visible, not clipped
+  - [ ] Pagination controls visible with proper spacing
+  - [ ] Search/filter bar has proper padding and doesn't touch table
+  - [ ] Empty columns or missing data flagged
+  - [ ] Status badges have internal padding (text not touching badge border)
+
+- **Form chunk**:
+  - [ ] All labels present and aligned consistently (all left-aligned or all top-aligned)
+  - [ ] Input fields have minimum 8px internal padding
+  - [ ] Consistent spacing between form groups (at least 16px)
+  - [ ] Error message space reserved or visible
+  - [ ] Submit button properly sized and not touching other elements
+  - [ ] Form container has visible padding from its parent
+
+- **Dashboard / Stats chunk**:
+  - [ ] Stat cards arranged in a grid with consistent gaps
+  - [ ] Numbers and labels inside cards have visible padding from card edges
+  - [ ] Charts rendered (not blank rectangles)
+  - [ ] Recent activity list items have consistent spacing
+  - [ ] Card shadows/borders consistent across all cards
+
+- **List / Messages chunk**:
+  - [ ] List items have consistent height and spacing
+  - [ ] Avatar/icon aligned with text content
+  - [ ] Timestamps aligned (typically right-aligned and vertically centered)
+  - [ ] Minimum 12px padding inside each list item
+  - [ ] Dividers (if present) span the correct width
+
+- **Empty state chunk**:
+  - [ ] Illustration centered in the available space
+  - [ ] Text content centered below illustration
+  - [ ] CTA button prominent and properly sized
+  - [ ] Generous whitespace around the empty state (not cramped)
 
 ### Obvious Issues (any chunk)
 - Blank/white areas where content should be
@@ -174,7 +203,27 @@ For each chunk, evaluate against these criteria:
 - Console errors visible in the UI
 - Text that appears cut off or truncated
 
-After analyzing all chunks, form a single verdict: pass or fail with specific notes.
+### Forming the Verdict
+
+After analyzing ALL chunks, form your verdict. **The default should be FAIL.** Only
+mark as PASS if every single checklist item above is satisfied. Common mistakes:
+
+**DO NOT mark PASS if:**
+- Any element appears to touch or nearly touch a container edge (padding issue)
+- Any row of items has inconsistent vertical alignment
+- Any text appears cramped or too close to borders/icons
+- Any spacing between similar elements is visibly inconsistent
+- Any interactive element (button, link, badge) appears smaller than 32px in height
+
+**Be especially strict about:**
+1. **Navigation bars** — misaligned items here are immediately visible to users
+2. **Table cells** — cramped cells make data unreadable
+3. **Card padding** — cards without internal padding look broken
+4. **Status badges** — text touching badge borders is a common AI-generated defect
+
+When recording a FAIL, be specific: "Top bar: Dr. Rivera avatar and notification bell
+are not vertically centered — avatar appears 4px lower. Messages panel: list items
+have only ~4px padding on left edge, needs minimum 12px."
 
 ## Step 5: Record Results
 

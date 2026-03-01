@@ -13,6 +13,8 @@
     "layout_preference": "",
     "layout_preference_source": "",
     "openapi_spec_path": "",
+    "backend_api_url": "",
+    "backend_api_url_source": "",
     "gemini_api_key": "",
     "gemini_api_key_source": ""
   },

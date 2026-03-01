@@ -28,6 +28,8 @@ start of a session and update it after every meaningful action.
     "layout_preference": "sidebar-layout",
     "layout_preference_source": "user",
     "openapi_spec_path": "spec/api.yaml",
+    "backend_api_url": "",
+    "backend_api_url_source": "",
     "gemini_api_key": "AIza...",
     "gemini_api_key_source": "user"
   },
@@ -331,6 +333,8 @@ This prints a concise status overview so you can immediately understand the proj
   "layout_preference_source": "user",
   "openapi_spec_path": "spec/api.yaml",
   "openapi_spec_path_source": "user",
+  "backend_api_url": "",
+  "backend_api_url_source": "",
   "gemini_api_key": "AIza...",
   "gemini_api_key_source": "user"
 }

@@ -188,6 +188,65 @@ Create `src/lib/mock-data.ts` with typed mock data generated from OpenAPI schema
 - Export typed getter functions: `getUsers()`, `getUserById(id)`, `searchUsers(query)`, etc.
 - Add simulated async delays: `await new Promise(r => setTimeout(r, 300+Math.random()*500))`
 
+### Generate API Client Layer (if backend URL provided)
+
+If the user provided a backend API URL, create `src/lib/api-client.ts` instead of (or alongside) the mock data layer:
+
+```typescript
+// src/lib/api-client.ts
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+
+async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    ...options,
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+// Generated from OpenAPI spec — one function per endpoint:
+export const api = {
+  users: {
+    list: (params?: { page?: number; search?: string }) =>
+      fetchAPI<User[]>(`/users?${new URLSearchParams(params as any)}`),
+    getById: (id: string) => fetchAPI<User>(`/users/${id}`),
+    create: (data: CreateUserInput) =>
+      fetchAPI<User>('/users', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: UpdateUserInput) =>
+      fetchAPI<User>(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    delete: (id: string) =>
+      fetchAPI<void>(`/users/${id}`, { method: 'DELETE' }),
+  },
+  // ... generated for each resource
+};
+```
+
+Also create `src/lib/data-provider.ts` that switches between real API and mock data:
+
+```typescript
+// src/lib/data-provider.ts
+import { api } from './api-client';
+import * as mockData from './mock-data';
+
+const USE_REAL_API = !!process.env.NEXT_PUBLIC_API_URL;
+
+export const data = {
+  users: {
+    list: USE_REAL_API ? api.users.list : mockData.getUsers,
+    getById: USE_REAL_API ? api.users.getById : mockData.getUserById,
+    create: USE_REAL_API ? api.users.create : mockData.createUser,
+    update: USE_REAL_API ? api.users.update : mockData.updateUser,
+    delete: USE_REAL_API ? api.users.delete : mockData.deleteUser,
+  },
+};
+```
+
+All page components should import from `data-provider`, never directly from mock-data
+or api-client. This makes the switch transparent.
+
+Add `NEXT_PUBLIC_API_URL` to `.env.local` with the user's provided backend URL.
+
 ### Generate TypeScript Types
 
 Create `src/lib/types.ts` from OpenAPI schemas:
