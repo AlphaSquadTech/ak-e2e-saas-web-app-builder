@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "project_name": "",
+  "source_documents": [],
+  "created_at": "",
+  "last_updated": "",
+  "current_phase": "plan",
+  "design_inputs": {
+    "accent_color": "",
+    "accent_color_source": "",
+    "font_preference": "",
+    "font_preference_source": "",
+    "layout_preference": "",
+    "layout_preference_source": "",
+    "openapi_spec_path": "",
+    "gemini_api_key": "",
+    "gemini_api_key_source": ""
+  },
+  "plan": {},
+  "pages": [],
+  "shared_components": [],
+  "session_log": [],
+  "issues": [],
+  "audit": {
+    "interactions_passed": false,
+    "accessibility_passed": false,
+    "responsive_passed": false,
+    "performance_passed": false,
+    "completed_at": null
+  }
+}

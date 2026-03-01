@@ -1,0 +1,103 @@
+{
+  "project_name": "my-saas-app",
+  "site_name": "App Name",
+  "site_description": "Description from OpenAPI spec",
+  "api_spec": {
+    "path": "openapi-spec.yaml",
+    "title": "API Title",
+    "version": "1.0.0",
+    "base_url": "https://api.example.com"
+  },
+  "design_system": {
+    "_note": "Auto-generated from design_inputs",
+    "primary": "#2563eb",
+    "primary_foreground": "#ffffff",
+    "secondary": "#93a3d1",
+    "background": "#ffffff",
+    "foreground": "#0a0a0a",
+    "muted": "#6b7280",
+    "muted_background": "#f3f4f6",
+    "border": "#e5e7eb",
+    "destructive": "#ef4444",
+    "font_heading": "Inter",
+    "font_body": "Inter",
+    "border_radius": "0.5rem",
+    "layout": "sidebar"
+  },
+  "resources": [
+    {
+      "name": "users",
+      "endpoints": ["GET /users", "GET /users/{id}", "POST /users", "PUT /users/{id}", "DELETE /users/{id}"],
+      "schema": "User"
+    }
+  ],
+  "pages": [
+    {
+      "id": "dashboard",
+      "route": "/dashboard",
+      "title": "Dashboard",
+      "page_type": "dashboard",
+      "resource": null,
+      "endpoints": [],
+      "components": ["StatCards", "RecentActivity", "Charts"],
+      "priority": "high",
+      "description": "Overview dashboard with stats and recent activity"
+    },
+    {
+      "id": "users-list",
+      "route": "/users",
+      "title": "Users",
+      "page_type": "list",
+      "resource": "users",
+      "endpoints": ["GET /users"],
+      "components": ["DataTable", "SearchFilter", "CreateDialog", "Pagination"],
+      "priority": "high",
+      "description": "User list with search, filter, and CRUD operations"
+    },
+    {
+      "id": "users-detail",
+      "route": "/users/[id]",
+      "title": "User Detail",
+      "page_type": "detail",
+      "resource": "users",
+      "endpoints": ["GET /users/{id}", "PUT /users/{id}", "DELETE /users/{id}"],
+      "components": ["DetailCard", "TabbedSections", "EditSheet", "DeleteDialog"],
+      "priority": "high",
+      "description": "User detail view with edit and delete capabilities"
+    },
+    {
+      "id": "settings",
+      "route": "/settings",
+      "title": "Settings",
+      "page_type": "settings",
+      "resource": null,
+      "endpoints": [],
+      "components": ["SettingsForm", "DangerZone"],
+      "priority": "low",
+      "description": "Application settings"
+    }
+  ],
+  "build_order": ["layout", "dashboard", "users-list", "users-detail", "settings"],
+  "shared_components": [
+    {
+      "name": "AppShell",
+      "description": "Main layout wrapper with sidebar/topnav and content area"
+    },
+    {
+      "name": "DataTable",
+      "description": "Reusable data table with sort, search, filter, pagination"
+    },
+    {
+      "name": "PageTransition",
+      "description": "Framer Motion AnimatePresence wrapper for page transitions"
+    },
+    {
+      "name": "EmptyState",
+      "description": "Empty state component with illustration, message, and CTA"
+    },
+    {
+      "name": "LoadingSkeleton",
+      "description": "Skeleton loading screens for different page types"
+    }
+  ]
+}

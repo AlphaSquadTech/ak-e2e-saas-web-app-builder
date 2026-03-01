@@ -1,0 +1,72 @@
+{
+  "_schema_version": "1.0.0",
+  "_description": "Image manifest for AI generation. Each entry describes an image the site needs. Run generate_images.py to produce real images via Gemini API.",
+  "project_name": "",
+  "accent_color": "",
+  "font_preference": "",
+  "images": [
+    {
+      "id": "hero-main",
+      "path": "public/images/hero-main.webp",
+      "placeholder": "public/images/placeholders/hero-main.svg",
+      "prompt": "A modern SaaS product dashboard interface showing analytics charts and data visualizations on a clean white background",
+      "alt": "Product dashboard showing real-time analytics and key metrics",
+      "context": "Homepage hero section, above the fold, primary visual",
+      "dimensions": { "width": 1200, "height": 630 },
+      "aspect_ratio": "16:9",
+      "style": "photorealistic product screenshot, clean UI, professional",
+      "brand": {
+        "accent_color": "#2563eb",
+        "font": "Inter",
+        "mood": "professional, modern, trustworthy"
+      },
+      "page_id": "home",
+      "priority": "high",
+      "status": "placeholder",
+      "generated_at": null,
+      "error": null
+    },
+    {
+      "id": "feature-icon-speed",
+      "path": "public/images/feature-speed.webp",
+      "placeholder": "public/images/placeholders/feature-speed.svg",
+      "prompt": "A minimal abstract illustration representing speed and performance — clean geometric shapes suggesting motion and acceleration",
+      "alt": "Abstract illustration representing fast performance",
+      "context": "Features page, feature card icon/illustration",
+      "dimensions": { "width": 400, "height": 400 },
+      "aspect_ratio": "1:1",
+      "style": "flat vector illustration, minimal, modern",
+      "brand": {
+        "accent_color": "#2563eb",
+        "font": "Inter",
+        "mood": "professional, modern, trustworthy"
+      },
+      "page_id": "features",
+      "priority": "medium",
+      "status": "placeholder",
+      "generated_at": null,
+      "error": null
+    },
+    {
+      "id": "og-home",
+      "path": "public/og/home.png",
+      "placeholder": "public/og/placeholders/home.svg",
+      "prompt": "Open Graph social share card: bold headline 'Site Name' with tagline below, brand color accent bar, clean professional layout suitable for social media preview",
+      "alt": "Site Name — tagline for social sharing",
+      "context": "Open Graph image for homepage social sharing",
+      "dimensions": { "width": 1200, "height": 630 },
+      "aspect_ratio": "1200:630",
+      "style": "social media card, typographic, branded",
+      "brand": {
+        "accent_color": "#2563eb",
+        "font": "Inter",
+        "mood": "professional, modern, trustworthy"
+      },
+      "page_id": "home",
+      "priority": "low",
+      "status": "placeholder",
+      "generated_at": null,
+      "error": null
+    }
+  ]
+}
