@@ -9,7 +9,7 @@ Dependencies: google-genai, Pillow
 Usage:
     python generate_images.py [--manifest image-manifest.json] [--dry-run] [--delay 2]
                               [--only <image-id>] [--retry-failed]
-                              [--model gemini-3.1-flash-image-preview]
+                              [--model gemini-3-pro-image-preview]
                               [--style <style>]
 
 Options:
@@ -18,7 +18,7 @@ Options:
     --delay         Seconds between API calls (default: 2)
     --only          Generate a single image by ID
     --retry-failed  Also retry entries with status 'failed'
-    --model         Model override (default: gemini-3.1-flash-image-preview)
+    --model         Model override (default: gemini-3-pro-image-preview)
     --style         Global style override (photorealistic, watercolor, oil-painting,
                     sketch, pixel-art, anime, vintage, modern, abstract, minimalist)
 
@@ -234,8 +234,8 @@ def main():
     )
     parser.add_argument(
         "--model",
-        default=os.environ.get("IMAGE_MODEL", "gemini-3.1-flash-image-preview"),
-        help="Model name (default: gemini-3.1-flash-image-preview)",
+        default=os.environ.get("IMAGE_MODEL", "gemini-3-pro-image-preview"),
+        help="Model name (default: gemini-3-pro-image-preview)",
     )
     parser.add_argument(
         "--style",

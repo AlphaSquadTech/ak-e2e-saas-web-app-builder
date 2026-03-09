@@ -226,7 +226,7 @@ Claude cannot generate images. The skill uses a two-stage image pipeline:
 
 2. **After Build (Phase 2.5)**: A Python script calls the Gemini API via the `google-genai`
    SDK to generate real images from the manifest prompts using the
-   `gemini-3.1-flash-image-preview` model. Requires a `GEMINI_API_KEY`.
+   `gemini-3-pro-image-preview` model. Requires a `GEMINI_API_KEY`.
    Cost: ~$0.50–$1.50 for a typical app.
 
 ```bash

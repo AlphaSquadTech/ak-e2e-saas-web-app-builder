@@ -3,7 +3,7 @@
 The skill cannot generate images itself. Instead, it uses a two-stage pipeline:
 
 1. **Placeholders** — branded SVGs that look intentional, not broken
-2. **AI generation** — Gemini API (`gemini-3.1-flash-image-preview`) fills in real images from prompts
+2. **AI generation** — Gemini API (`gemini-3-pro-image-preview`) fills in real images from prompts
 
 ## The Image Manifest
 
@@ -162,7 +162,7 @@ For each manifest entry it:
 
 1. Constructs a rich prompt from the entry's fields (description, aspect ratio, style,
    brand context, text rendering hints)
-2. Calls `client.models.generate_content(model="gemini-3.1-flash-image-preview", ...)`
+2. Calls `client.models.generate_content(model="gemini-3-pro-image-preview", ...)`
 3. Extracts the inline image data from the response via `part.as_image()`
 4. Resizes to target dimensions if specified, and saves in the correct format
 
@@ -208,7 +208,7 @@ language across all images.
 
 ### Cost Estimate
 
-`gemini-3.1-flash-image-preview` pricing:
+`gemini-3-pro-image-preview` pricing:
 - ~$0.045 per image at 512px
 - ~$0.067 per image at 1024px
 - ~$0.101 per image at 2048px
